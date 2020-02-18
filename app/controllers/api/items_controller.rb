@@ -1,13 +1,13 @@
 class Api::ItemsController < ApplicationController
-  before_action :find_item, only: [:show, :update, :destroy]
+  before_action :set_category
 
   def index
-    items = Item.all
+    items = @category.items
     render json: items
   end
 
   def create
-    item = Item.new(item_params)
+    item = @category.items.build(item_params)
     if item.save
       render json: item
     else
@@ -16,21 +16,24 @@ class Api::ItemsController < ApplicationController
   end
 
   def show
-    render json: @item
+    item = @category.items.find_by(id: params[:id])
+    render json: item
   end
 
   def update
+    @category.items.update(item_params)
   end
 
   def destroy
-    @item.destroy
+    @category.items.destroy
   end
 
   private
-  def find_item
-    @item = Item.find_by(id: params[:id])
+
+  def set_category
+    @category = Category.find_by(id: params[:category_id])
   end
-  
+
   def item_params
     params.require(:item).permit(:name, :category_id, :description, :size, :price, :image_url, :sold)
   end
