@@ -1,4 +1,4 @@
-class Api::CategoriesController < ApplicationController
+class Api::V1::CategoriesController < ApplicationController
   before_action :find_category, only: [:show, :destroy]
 
   def index
