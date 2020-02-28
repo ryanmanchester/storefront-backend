@@ -7,16 +7,11 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def create
-    category = Category.find_by(name: params[:name])
-    if category
+    category = Category.find_or_initialize_by(name: params[:name])
+    if category.save
       render json: category
     else
-      category = Category.new(category_params)
-      if category.save
-        render json: category
-      else
-        render json: {error: "Error in creating category"}
-      end
+      render json: category.errors.full_messages
     end
   end
 

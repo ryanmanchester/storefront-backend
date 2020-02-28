@@ -11,7 +11,7 @@ class Api::V1::ItemsController < ApplicationController
     if item.save
       render json: item
     else
-      render json: {error: "Please make sure all fields are filled"}
+      render json: item.errors.full_messages
     end
   end
 
