@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::API
+  include ::ActionController::Cookies
+
   def current_seller
-    User.find(session[:seller_id])
+    Seller.find_by(id: session[:seller_id])
   end
 
   def logged_in?
