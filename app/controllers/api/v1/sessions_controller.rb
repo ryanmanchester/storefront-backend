@@ -3,7 +3,6 @@ class Api::V1::SessionsController < ApplicationController
     seller = Seller.find_by(name: params[:session][:name])
     if seller && seller.authenticate(params[:session][:password])
       session[:seller_id] = seller.id
-      byebug
       render json: seller
     else
       render json: {
@@ -20,5 +19,12 @@ class Api::V1::SessionsController < ApplicationController
         error: "Please Log In"
       }
     end
+  end
+
+  def destroy
+    session.clear
+    render json: {
+      notice: "You are now logged out"
+    }
   end
 end
