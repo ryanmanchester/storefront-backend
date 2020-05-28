@@ -4,7 +4,7 @@ class Api::V1::SessionsController < ApplicationController
     seller = Seller.find_by(name: params[:session][:name])
     if seller && seller.authenticate(params[:session][:password])
       session[:seller_id] = seller.id
-      render json: seller
+      render json: SellerSerializer.new(seller)
     else
       render json: {
         error: "Seller Not Found"
