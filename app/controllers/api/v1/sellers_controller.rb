@@ -11,10 +11,7 @@ class Api::V1::SellersController < ApplicationController
 
   def show
     seller = Seller.find(params[:id])
-    options = {
-      include: [:items]
-    }
-    render json: SellerSerializer.new(seller, options)
+    render json: seller
   end
 
   def destroy
