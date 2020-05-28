@@ -1,4 +1,5 @@
 class Api::V1::SessionsController < ApplicationController
+
   def create
     seller = Seller.find_by(name: params[:session][:name])
     if seller && seller.authenticate(params[:session][:password])
@@ -13,7 +14,10 @@ class Api::V1::SessionsController < ApplicationController
 
   def get_current_seller
     if logged_in?
-      render json: current_seller
+      options = {
+        include: [:items]
+      }
+      render json: SellerSerializer.new(current_seller,options)
     else
       render json: {
         error: "Please Log In"
