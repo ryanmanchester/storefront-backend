@@ -1,9 +1,9 @@
 class Api::V1::SellersController < ApplicationController
 
   def create
-    seller = Seller.find_or_initialize_by(name: seller_params[:name])
+    seller = Seller.new(seller_params)
     if seller.save
-      render json: seller
+      render json: SellerSerializer.new(seller)
     else
       render json: seller.errors.full_messages
     end
