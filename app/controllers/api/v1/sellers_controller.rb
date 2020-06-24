@@ -3,7 +3,10 @@ class Api::V1::SellersController < ApplicationController
   def create
     seller = Seller.new(seller_params)
     if seller.save
-      render json: SellerSerializer.new(seller)
+      options = {
+        include: [:items]
+      }
+      render json: SellerSerializer.new(seller, options)
     else
       render json: seller.errors.full_messages
     end
