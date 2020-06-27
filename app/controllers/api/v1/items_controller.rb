@@ -7,12 +7,12 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def create
-    byebug
+    #byebug
     item = current_seller.items.build(item_params)
     if item.save
-      render json: ItemSerializer.new(item)
+      render json: item
     else
-      render json: item.errors.full_messages
+      render json: item.errors.full_messages.to_sentence
     end
   end
 
