@@ -7,9 +7,10 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def create
-    item = @category.items.build(item_params)
+    byebug
+    item = current_seller.items.build(item_params)
     if item.save
-      render json: item
+      render json: ItemSerializer.new(item)
     else
       render json: item.errors.full_messages
     end
