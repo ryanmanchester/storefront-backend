@@ -3,14 +3,14 @@ class Api::V1::ItemsController < ApplicationController
 
   def index
     items = @category.items
-    render json: items
+    render json: ItemSerializer.new(items)
   end
 
   def create
     #byebug
     item = current_seller.items.build(item_params)
     if item.save
-      render json: item
+      render json: ItemSerializer.new(item)
     else
       render json: item.errors.full_messages.to_sentence
     end
