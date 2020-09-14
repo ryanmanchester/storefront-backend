@@ -1,5 +1,5 @@
 class Api::V1::ItemsController < ApplicationController
-  before_action :set_category
+  before_action :set_category, :set_item
 
   def index
     items = @category.items
@@ -22,17 +22,26 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def update
-    @category.items.update(item_params)
+    if @item.update(item_params)
+      byebug
+      render json: item
+    else
+      render json: item.errors.full_messages.to_sentence
+    end
   end
 
   def destroy
-    @category.items.destroy
+
   end
 
   private
 
   def set_category
     @category = Category.find_by(id: params[:category_id])
+  end
+
+  def set_item
+    @item = @category.items.find(params[:id])
   end
 
   def item_params
