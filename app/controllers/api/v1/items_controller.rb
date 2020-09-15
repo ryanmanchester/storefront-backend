@@ -1,13 +1,13 @@
 class Api::V1::ItemsController < ApplicationController
-  before_action :set_category, :set_item
+  before_action :set_item, only: [:update, :destroy]
 
   def index
-    items = @category.items
+    category = Category.find_by(id: params[:category_id])
+    items = category.items
     render json: ItemSerializer.new(items)
   end
 
   def create
-    #byebug
     item = current_seller.items.build(item_params)
     if item.save
       render json: item
@@ -17,16 +17,14 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def show
-    item = @category.items.find_by(id: params[:id])
-    render json: item
+    render json: @item
   end
 
   def update
     if @item.update(item_params)
-      byebug
-      render json: item
+      render json: @item
     else
-      render json: item.errors.full_messages.to_sentence
+      render json: @item.errors.full_messages.to_sentence
     end
   end
 
@@ -36,12 +34,8 @@ class Api::V1::ItemsController < ApplicationController
 
   private
 
-  def set_category
-    @category = Category.find_by(id: params[:category_id])
-  end
-
   def set_item
-    @item = @category.items.find(params[:id])
+    @item = Item.find(params[:id])
   end
 
   def item_params
