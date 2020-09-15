@@ -8,7 +8,9 @@ class Api::V1::SellersController < ApplicationController
       }
       render json: SellerSerializer.new(seller, options)
     else
-      render json: seller.errors.full_messages
+      render json: {
+        error: seller.errors.full_messages
+      }
     end
   end
 

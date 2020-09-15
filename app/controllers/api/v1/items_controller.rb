@@ -12,7 +12,9 @@ class Api::V1::ItemsController < ApplicationController
     if item.save
       render json: item
     else
-      render json: item.errors.full_messages.to_sentence
+      render json: {
+        error: item.errors.full_messages.to_sentence
+      }
     end
   end
 
@@ -24,7 +26,9 @@ class Api::V1::ItemsController < ApplicationController
     if @item.update(item_params)
       render json: @item
     else
-      render json: @item.errors.full_messages.to_sentence
+      render json: {
+        error: @item.errors.full_messages.to_sentence
+        }
     end
   end
 
