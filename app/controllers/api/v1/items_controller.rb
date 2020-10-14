@@ -18,9 +18,6 @@ class Api::V1::ItemsController < ApplicationController
     end
   end
 
-  def show
-    render json: @item
-  end
 
   def update
     if @item.update(item_params)
@@ -33,7 +30,10 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def destroy
-
+    @item.destroy
+    render json: {
+      message: "Item successfully deleted"
+    }
   end
 
   private
