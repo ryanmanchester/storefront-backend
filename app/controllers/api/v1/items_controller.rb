@@ -10,7 +10,8 @@ class Api::V1::ItemsController < ApplicationController
   def create
     item = current_seller.items.build(item_params)
     if item.save
-      render json: item
+
+      render json: ItemSerializer.new([item])
     else
       render json: {
         error: item.errors.full_messages.to_sentence
@@ -21,7 +22,7 @@ class Api::V1::ItemsController < ApplicationController
 
   def update
     if @item.update(item_params)
-      render json: @item
+      render json: ItemSerializer.new([@item])
     else
       render json: {
         error: @item.errors.full_messages.to_sentence
