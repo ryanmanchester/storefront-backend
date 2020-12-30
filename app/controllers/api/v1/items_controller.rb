@@ -39,8 +39,8 @@ class Api::V1::ItemsController < ApplicationController
 
   def add_to_cart
     session[:cart] ||= []
-    session[:cart] << params[:attributes]
-    render json: session[:cart]
+    session[:cart] << params
+    render json: params
   end
 
   def current_cart
@@ -55,6 +55,13 @@ class Api::V1::ItemsController < ApplicationController
         error: "Cart Not Found"
       }
     end
+  end
+
+  def clear_cart
+    session.clear
+    render json: {
+      message: "Cart Cleared"
+    }
   end
 
   private
