@@ -76,6 +76,20 @@ class Api::V1::ItemsController < ApplicationController
     end
   end
 
+  def remove_item
+    cart = session[:cart]
+    item_remove = cart.find {|item| item[:id] == params[:id]}
+    if cart.delete(item_remove)
+      render json: {
+        message: "Item removed from cart"
+      }
+    else
+      render json: {
+        error: "Error in removing item from cart"
+      }
+    end
+  end
+
   private
 
   def set_item
