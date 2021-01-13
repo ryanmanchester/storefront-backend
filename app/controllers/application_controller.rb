@@ -8,4 +8,12 @@ class ApplicationController < ActionController::API
   def logged_in?
     !!current_seller
   end
+
+  def clear_cart
+    session.clear
+    render json: {
+      message: "Cart Cleared"
+    }
+  end
+  
 end
