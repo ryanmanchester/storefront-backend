@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   post '/api/v1/sellers/login', to: 'api/v1/sessions#create'
   post '/api/v1/sellers/signup', to: 'api/v1/sellers#create'
   post '/api/v1/carts/add_to_cart', to: 'api/v1/carts#add_to_cart'
-  post'/api/v1/orders', to: 'api/v/orders#create'
+  post'/api/v1/orders', to: 'api/v1/orders#create'
   delete '/api/v1/sellers/logout', to: 'api/v1/sessions#destroy'
   delete '/api/v1/carts/clear_cart', to: 'api/v1/carts#clear_cart'
   delete '/api/v1/orders/place_order', to: 'api/v1/orders#place_order'
